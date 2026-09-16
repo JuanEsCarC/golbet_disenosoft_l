@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// GolBet.Entities/Enums/BetStatus.cs
 
-namespace GolBet.Entities.Enums
+namespace GolBet.Entities.Enums;
+
+public enum BetStatus
 {
-    internal class BetStatus
-    {
-    }
+    Pending = 0,
+    Won = 1,
+    Lost = 2
 }

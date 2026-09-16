@@ -1,12 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+// GolBet.Entities/Team.cs
+using GolBet.Entities.Common;
+using System.ComponentModel.DataAnnotations;
 
-namespace GolBet.Entities
+namespace GolBet.Entities;
+
+public class Team : AuditableEntity
 {
-    internal class Team
-    {
-    }
+    [Required, MaxLength(80)]
+    public string Name { get; set; } = null!;
+
+    [Required, MaxLength(60)]
+    public string City { get; set; } = null!;
+
+    [MaxLength(300)]
+    public string? CrestUrl { get; set; }
 }
