@@ -1,5 +1,4 @@
-﻿
-// GolBet.Repositories/Data/AppDbContext.cs
+﻿// GolBet.Repositories/Data/AppDbContext.cs
 using GolBet.Entities;
 using GolBet.Entities.Common;
 using Microsoft.EntityFrameworkCore;
