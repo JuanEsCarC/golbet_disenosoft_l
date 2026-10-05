@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// GolBet.Services/DTOs/TeamDto.cs
+namespace GolBet.Services.DTOs;
 
-namespace GolBet.Services.DTOs
+public class TeamDto
 {
-    internal class TeamDto
-    {
-    }
+    public int Id { get; set; }
+    public string Name { get; set; } = null!;
+    public string City { get; set; } = null!;
+    public string? CrestUrl { get; set; }
+    public bool IsActive { get; set; }
 }
