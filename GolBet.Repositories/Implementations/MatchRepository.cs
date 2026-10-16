@@ -11,7 +11,8 @@ public class MatchRepository : GenericRepository<Match>, IMatchRepository
 {
     public MatchRepository(AppDbContext context) : base(context) { }
 
-    public async Task<IEnumerable<Match>> GetAllWithTeamsAsync(MatchStatus? status = null)
+    public async Task<IEnumerable<Match>> GetAllWithTeamsAsync(MatchStatus? status = null,
+        string? searchTeamInMatch = null) //Wo#1 ---> Added parameter searchTeamInMatch
     {
         var query = _dbSet
             .Include(m => m.HomeTeam)
@@ -22,6 +23,14 @@ public class MatchRepository : GenericRepository<Match>, IMatchRepository
 
         if (status.HasValue)
             query = query.Where(m => m.Status == status.Value);
+
+        // TI#1 ---> IQueryable composition: Only filters if a search term is provided.
+        if (!string.IsNullOrWhiteSpace(searchTeam))
+        {
+            var term = searchTeam.Trim();
+            query = query.Where(m => m.HomeTeam.Name.Contains(term) ||
+                                     m.AwayTeam.Name.Contains(term));
+        }
 
         return await query.OrderBy(m => m.Date).ToListAsync();
     }
