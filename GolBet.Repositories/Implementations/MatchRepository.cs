@@ -25,9 +25,9 @@ public class MatchRepository : GenericRepository<Match>, IMatchRepository
             query = query.Where(m => m.Status == status.Value);
 
         // TI#1 ---> IQueryable composition: Only filters if a search term is provided.
-        if (!string.IsNullOrWhiteSpace(searchTeam))
+        if (!string.IsNullOrWhiteSpace(searchTeamInMatch))
         {
-            var term = searchTeam.Trim();
+            var term = searchTeamInMatch.Trim();
             query = query.Where(m => m.HomeTeam.Name.Contains(term) ||
                                      m.AwayTeam.Name.Contains(term));
         }

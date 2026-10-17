@@ -21,7 +21,7 @@ public class MatchService : IMatchService
     }
 
     public async Task<IEnumerable<MatchDto>> GetBoardAsync(MatchStatus? status = null,
-        string? searchTeamInMatch = null); //Wo#1 ---> Added parameter searchTeamInMatch
+        string? searchTeamInMatch = null) //Wo#1 ---> Added parameter searchTeamInMatch
     {
         var matches = await _matchRepository.GetAllWithTeamsAsync(status, searchTeamInMatch); //Wo#1 ---> Added parameter searchTeamInMatch
         return _mapper.Map<IEnumerable<MatchDto>>(matches);
