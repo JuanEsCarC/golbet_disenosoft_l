@@ -9,9 +9,17 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
+//es-CO culture configuration with decimal point for quotas
 var culture = new CultureInfo("es-CO");
+
+//Added issues with decimal separator in quotas. By default, es-CO uses a comma as decimal separator, but we need a dot for our application.
+culture.NumberFormat.NumberDecimalSeparator = "."; 
+culture.NumberFormat.CurrencyDecimalSeparator = ".";
+
 CultureInfo.DefaultThreadCurrentCulture = culture;
 CultureInfo.DefaultThreadCurrentUICulture = culture;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
