@@ -12,9 +12,13 @@ using System.Globalization;
 //es-CO culture configuration with decimal point for quotas
 var culture = new CultureInfo("es-CO");
 
-//Added issues with decimal separator in quotas. By default, es-CO uses a comma as decimal separator, but we need a dot for our application.
+/*Added issues with decimal separator in quotas. By default, es-CO uses a comma as decimal separator, but we need a dot for our application.
 culture.NumberFormat.NumberDecimalSeparator = "."; 
-culture.NumberFormat.CurrencyDecimalSeparator = ".";
+culture.NumberFormat.CurrencyDecimalSeparator = "."; JECC*/
+
+// Dates in Spanish; numbers neutral so model binding reads "2.5" correctly
+culture.NumberFormat = (NumberFormatInfo)CultureInfo.InvariantCulture.NumberFormat.Clone();
+culture.NumberFormat.NumberGroupSeparator = "";   // "2,5" fails loudly, never binds as 25
 
 CultureInfo.DefaultThreadCurrentCulture = culture;
 CultureInfo.DefaultThreadCurrentUICulture = culture;
