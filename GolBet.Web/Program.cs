@@ -1,3 +1,4 @@
+using Serilog;
 using GolBet.Entities;
 using GolBet.Repositories.Data;
 using GolBet.Repositories.Implementations;
@@ -26,6 +27,9 @@ CultureInfo.DefaultThreadCurrentUICulture = culture;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, config) =>
+    config.ReadFrom.Configuration(context.Configuration));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -71,6 +75,7 @@ builder.Services.AddScoped<IBetService, BetService>();
 
 var app = builder.Build();
 
+/*
 // Seed the database on startup
 using (var scope = app.Services.CreateScope())
 {
@@ -82,15 +87,33 @@ using (var scope = app.Services.CreateScope())
 }
 
 // Configure the HTTP request pipeline.
+
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+*/ //This part was commented to implement the new error handling with ErrorController Modulo-10
+
+
+// Unhandled exceptions (500): friendly page in production,
+// full yellow stack trace while developing
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error/General");
+}
+
+// Status codes without a body (404 and friends): re-execute
+// the pipeline against our ErrorController
+app.UseStatusCodePagesWithReExecute("/Error/{0}");
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseSerilogRequestLogging();
 
 app.UseRouting();
 
